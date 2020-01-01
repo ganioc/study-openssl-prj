@@ -1,3 +1,4 @@
+#include <string.h>
 #include "common.h"
 
 void do_client_loop(BIO *conn) {
@@ -5,12 +6,16 @@ void do_client_loop(BIO *conn) {
     char buf[80];
 
     for (;;) {
-	if (!fgets(buf, sizeof(buf), stdin)) break;
-
-	for (nwritten = 0; nwritten < sizeof(buf); nwritten += err) {
-	    err = BIO_write(conn, buf + nwritten, strlen(buf) - nwritten);
-	    if (err < 0) return;
-	}
+      if (!fgets(buf, sizeof(buf), stdin)) {
+        break;
+      }
+      for (nwritten = 0; (unsigned long)nwritten < sizeof(buf);
+           nwritten += err) {
+        err = BIO_write(conn, buf + nwritten, (strlen(buf) - nwritten));
+        if (err < 0) {
+          return;
+        }
+      }
     }
 }
 
