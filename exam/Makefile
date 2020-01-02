@@ -2,13 +2,20 @@ src = $(wildcard *.c)
 obj  = $(src:.c=.o)
 
 FLAGS =  -g -Wall
-LDFLAGS = -lm -lpthread -lcrypt -lssl
+LDFLAGS = -lm -lpthread -lcrypto -lssl
 
 .PHONY: all
 
-all: $(obj) 
-	@echo "compiling"
-	gcc $< $(LDFLAGS) -o $@
+all: server client
+	@echo "compiling finished."
+
+client: client.o common.o reentrant.o
+	gcc $^ $(LDFLAGS) -o $@
+	@echo "client generated"
+
+server: server.o common.o reentrant.o
+	gcc $^ $(LDFLAGS) -o $@
+	@echo "server generated"
 
 %.o: %.c
 	gcc ${FLAGS} -o $@ -c $<
@@ -16,5 +23,5 @@ all: $(obj)
 .PHONY: clean 
 clean: 
 	@echo "Clean"
-	rm *.o
+	rm *.o client server
 

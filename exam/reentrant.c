@@ -37,7 +37,7 @@ struct CRYPTO_dynlock_value {
 };
 
 static struct CRYPTO_dynlock_value *dyn_create_function(const char *file,int line) {
-  struct CRYTPO_dynlock_value *value;
+  struct CRYPTO_dynlock_value *value;
   value = (struct CRYPTO_dynlock_value *)malloc(
       sizeof(struct CRYPTO_dynlock_value));
   if (!value) return NULL;
@@ -88,5 +88,5 @@ int THREAD_cleanup(void)
   free(mutex_buf);
   mutex_buf = NULL;
   return 1;
-}
 
+}
