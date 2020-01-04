@@ -10,7 +10,7 @@ void do_server_loop(BIO *conn) {
       if (err <= 0) break;
     }
     // fwrite(buf, 1, nread, stdout);
-    fprintf(stdout, "%s", buf);
+    fprintf(stdout, "rx: %s", buf);
   } while (err > 0);
   pthread_exit(NULL);
 }
